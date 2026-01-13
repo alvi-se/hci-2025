@@ -4,16 +4,34 @@ import { onMounted, onBeforeUnmount, ref } from 'vue';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { MapboxOverlay } from '@deck.gl/mapbox';
-import { HexagonLayer } from '@deck.gl/aggregation-layers';
+import { HexagonLayer, type HexagonLayerPickingInfo } from '@deck.gl/aggregation-layers';
 import Papa from 'papaparse';
+import { GeoJsonLayer } from 'deck.gl';
 
 interface CsvData {
   lat: number;
   lon: number;
+  "Name": string;
+  "Date of event": string;
+  "Age": string;
+  "Citizenship": string;
+  "Event location": string;
+  "Event location - District": string;
+  "Event location - Region": string;
+  "Date of death": string;
+  "Gender": string;
+  "Took part in the hostilities": string;
+  "Place of residence": string;
+  "Place of residence - District": string;
+  "Type of injury": string;
+  "Ammunition": string;
+  "Killed By": string;
+  "Notes": string;
 }
 
 // Reference to HTML container
 const mapContainer = ref<HTMLDivElement | null>(null);
+const tooltip = ref<HTMLDivElement | null>(null);
 let mapInstance: maplibregl.Map | null = null;
 let deckOverlay: MapboxOverlay | null = null;
 
@@ -45,7 +63,9 @@ function initMap(data: CsvData[]) {
   mapInstance = new maplibregl.Map({
     container: mapContainer.value,
     // Positron style by CartoDB
-    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+    // style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+    // Dark Matter style by CartoDB
+    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     center: [34.86, 31.59], // Palestine
     zoom: 7,
     pitch: 45, // Tilt map
@@ -54,16 +74,14 @@ function initMap(data: CsvData[]) {
 
   deckOverlay = new MapboxOverlay({
     layers: [
-      /*
-      This is really ugly, I'm commenting it out temporarily
-
       // Palestine layer
       new GeoJsonLayer({
         id: "Palestine",
         data: "/palestine.geojson",
         getFillColor: [0, 0, 0, 0],
         getLineColor: [0x0, 0xff, 0x0, 0xff],
-        lineWidthMinPixels: 5,
+        getLineWidth: 2,
+        lineWidthUnits: "pixels",
         getPolygonOffset: () => [1, 1],
       }),
       // Israel layer
@@ -72,10 +90,10 @@ function initMap(data: CsvData[]) {
         data: "/israel.geojson",
         getFillColor: [0, 0, 0, 0],
         getLineColor: [0xff, 0x0, 0x0, 0xff],
-        lineWidthMinPixels: 5,
-        getPolygonOffset: () => [1, 1],
+        getLineWidth: 2,
+        lineWidthUnits: "pixels",
+        getPolygonOffset: () => [2, 1],
       }),
-      */
       // Casualties layer
       new HexagonLayer<CsvData>({
         id: 'casualties',
@@ -89,15 +107,19 @@ function initMap(data: CsvData[]) {
         getPosition: (d: CsvData) => [d.lon, d.lat],
 
         colorRange: [
-          [1, 152, 189],
-          [73, 227, 206],
-          [216, 254, 181],
-          [254, 237, 177],
-          [254, 173, 84],
-          [209, 55, 78]
-        ],
+          [100, 50, 50],
+          [130, 40, 40],
+          [160, 30, 30],
+          [190, 20, 20],
+          [220, 10, 10],
+          [255, 0, 0]
+      ]
+
       }),
-    ]
+    ],
+    getTooltip: ({object}: HexagonLayerPickingInfo<CsvData>)=> {
+      return object && "Victim count: " + object.count.toString();
+    }
   });
 
   // Deck.gl map controller
@@ -113,6 +135,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="container">
     <div ref="mapContainer" class="map-container"></div>
+    <div ref="tooltip"></div>
   </div>
 </template>
 
