@@ -14,18 +14,19 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "@deck.gl/aggregation-layers": "^9.2.5",
-    "@deck.gl/core": "^9.2.5",
-    "@deck.gl/layers": "^9.2.5",
-    "@deck.gl/mapbox": "^9.2.5",
-    "deck.gl": "^9.2.5",
-    "maplibre-gl": "^5.15.0",
+    "@deck.gl/aggregation-layers": "^9.2.6",
+    "@deck.gl/core": "^9.2.6",
+    "@deck.gl/layers": "^9.2.6",
+    "@deck.gl/mapbox": "^9.2.6",
+    "@picocss/pico": "^2.1.1",
+    "deck.gl": "^9.2.6",
+    "maplibre-gl": "^5.17.0",
     "papaparse": "^5.5.3",
-    "vue": "^3.5.26"
+    "vue": "^3.5.27"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.3",
-    "@types/node": "^24.10.4",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.10.9",
     "@types/papaparse": "^5.5.2",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/tsconfig": "^0.8.1",
@@ -33,6 +34,6 @@
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.5",
-    "vue-tsc": "^3.2.2"
+    "vue-tsc": "^3.2.4"
   }
 }
