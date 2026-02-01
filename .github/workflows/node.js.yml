@@ -30,3 +30,11 @@ jobs:
         run: pnpm install
       - name: Build project
         run: pnpm run build
+      # Upload build folder (dist) as artifact
+      - name: Upload build output
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist # path to build output folder
+      # Deploy to GitHub Pages
+      - name: Deploy
+        uses: actions/deploy-pages@v4
