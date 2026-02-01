@@ -85,7 +85,7 @@ function initMap(data: CsvData[]) {
       // Palestine layer
       new GeoJsonLayer({
         id: "Palestine",
-        data: "/palestine.geojson",
+        data: baseUrl + "/palestine.geojson",
         getFillColor: [0, 0, 0, 0],
         getLineColor: [0x0, 0xff, 0x0, 0xff],
         getLineWidth: 2,
@@ -95,7 +95,7 @@ function initMap(data: CsvData[]) {
       // Israel layer
       new GeoJsonLayer({
         id: "Israel",
-        data: "/israel.geojson",
+        data: baseUrl + "/israel.geojson",
         getFillColor: [0, 0, 0, 0],
         getLineColor: [0xff, 0x0, 0x0, 0xff],
         getLineWidth: 2,
