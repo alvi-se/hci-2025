@@ -36,8 +36,15 @@ const tooltip = ref<HTMLDivElement | null>(null);
 let mapInstance: maplibregl.Map | null = null;
 let deckOverlay: MapboxOverlay | null = null;
 
-// static CSV file (public folder)
-const CSV_PATH = '/data.csv';
+// static CSV file (Vite base URL + public folder)
+let baseUrl = import.meta.env.BASE_URL;
+
+if (baseUrl == '/') {
+  baseUrl = ''
+}
+
+const CSV_PATH = baseUrl + '/data.csv';
+console.log(CSV_PATH);
 
 onMounted(() => {
   // Download data when component has been created in page
