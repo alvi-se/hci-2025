@@ -141,11 +141,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <main class="container">
-    <h1>3D Map -- Casualties hexbin</h1>
-    <div ref="mapContainer" class="map-container"></div>
-    <div ref="tooltip"></div>
-  </main>
+  <div ref="mapContainer" class="map-container"></div>
+  <div ref="tooltip"></div>
 </template>
 
 <style scoped>
